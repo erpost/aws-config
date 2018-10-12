@@ -9,3 +9,7 @@
     - Input IAM Role from above
 
 That's it! The script will deploy and enable Config in all Regions.
+
+Additional scripts available:
+- config-remove.py: Removes AWS Config from one or all Regions
+- config-status.py: Obtains a status of AWS Config in one or all Regions
