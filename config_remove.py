@@ -1,15 +1,6 @@
 import boto3
+from aws import get_regions
 from botocore.exceptions import ClientError
-
-
-def get_regions():
-    client = boto3.client('ec2')
-    response = client.describe_regions()
-    regions = []
-    for region in response['Regions']:
-        regions.append(region['RegionName'])
-
-    return regions
 
 
 def del_recorder(region):
@@ -36,7 +27,7 @@ def del_channel(region):
         client = boto3.client('config', region_name=region)
         response = client.delete_delivery_channel(
             DeliveryChannelName='default'
-            )
+        )
         print('Delivery Channel removed for region: {}'.format(region))
 
         return response

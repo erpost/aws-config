@@ -1,14 +1,8 @@
 import boto3
-
-
-def get_regions():
-    client = boto3.client('ec2')
-    response = client.describe_regions()
-    regions = []
-    for region in response['Regions']:
-        regions.append(region['RegionName'])
-
-    return regions
+import sys, time
+from aws import get_regions
+from config_rule_deploy import put_rule
+from config_rule_remove import del_rule
 
 
 def get_recorder_status(region):
@@ -59,33 +53,52 @@ def start_recorder(region):
     return response
 
 
+def progress_dots():
+    for i in range(30):
+        sys.stdout.write('.')
+        sys.stdout.flush()
+        time.sleep(1)
+    print('\n')
+
+
 if __name__ == "__main__":
+    rule_name = 'restricted-ssh'
+    rule_id = 'INCOMING_SSH_DISABLED'
+
     aws_regions = get_regions()
     for aws_region in aws_regions:
         print(aws_region)
 
-    selection = input('\nChoose a Region from above to deploy Config'
-                      ' or type "all" to deploy Config from all Regions: ')
+    region_selection = input('\nChoose a Region from above to deploy Config'
+                             ' or type "all" to deploy Config from all Regions: ')
     s3_bucket = input('Please input the S3 bucket: ')
     role_arn = input('Please input the Role ARN: ')
 
-    if selection.lower() == 'all':
+    if region_selection.lower() == 'all':
         for aws_region in aws_regions:
             print('*' * 15, aws_region, '*' * 15)
             if get_recorder_status(aws_region) == 0:
                 put_recorder(aws_region)
                 put_channel(aws_region)
                 start_recorder(aws_region)
+                put_rule(aws_region, rule_name, rule_id)
+                progress_dots()
+                del_rule(aws_region, rule_name)
+
             else:
                 print('Already deployed: ', aws_region)
 
     else:
-        if selection not in aws_regions:
-            print('Invalid Region: {}'.format(selection))
+        if region_selection not in aws_regions:
+            print('Invalid Region: {}'.format(region_selection))
         else:
-            if get_recorder_status(selection) == 0:
-                put_recorder(selection)
-                put_channel(selection)
-                start_recorder(selection)
+            if get_recorder_status(region_selection) == 0:
+                put_recorder(region_selection)
+                put_channel(region_selection)
+                start_recorder(region_selection)
+                put_rule(region_selection, rule_name, rule_id)
+                progress_dots()
+                del_rule(region_selection, rule_name)
+
             else:
-                print('Already deployed: ', selection)
+                print('Already deployed: ', region_selection)
