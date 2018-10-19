@@ -29,7 +29,7 @@ if __name__ == "__main__":
         print(aws_region)
 
     region_selection = input('\nChoose a Region to see a status of Config or'
-                      ' type "all" to deploy Config from all Regions: ')
+                             ' type "all" to deploy Config from all Regions: ')
 
     if region_selection.lower() == 'all':
         for aws_region in aws_regions:
