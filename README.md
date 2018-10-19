@@ -18,4 +18,4 @@ Additional scripts available:
 - config_rule_status.py: Obtains a status of an AWS Managed Config Rule
 
 - config_deploy_with_workaround.py: Workaround from AWS to support to remove 'Config Rule Splash Screen'
-    - Currently Not Working
+    - Currently Not Working and cost $2.00 per Rule, per Region
