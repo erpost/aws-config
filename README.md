@@ -11,5 +11,8 @@
 That's it! The script will deploy and enable Config in all Regions.
 
 Additional scripts available:
-- config-remove.py: Removes AWS Config from one or all Regions
-- config-status.py: Obtains a status of AWS Config in one or all Regions
+- config_remove.py: Removes AWS Config from one or all Regions
+- config_status.py: Obtains a status of AWS Config in one or all Regions
+- config_rule_deploy.py: Deploys AWS Managed Config Rule
+- config_rule_remove.py: Removes AWS Managed Config Rule
+- config_rule_status.py: Obtains a status of an AWS Managed Config Rule
