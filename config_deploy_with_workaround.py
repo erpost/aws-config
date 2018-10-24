@@ -62,8 +62,8 @@ def progress_dots():
 
 
 if __name__ == "__main__":
-    rule_name = 'restricted-ssh'
-    rule_id = 'INCOMING_SSH_DISABLED'
+    rule_name = 'rds-storage-encrypted'
+    rule_id = 'RDS_STORAGE_ENCRYPTED'
 
     aws_regions = get_regions()
     for aws_region in aws_regions:

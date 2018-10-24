@@ -10,7 +10,7 @@ def del_rule(region, config_rule):
             ConfigRuleName=config_rule
         )
 
-        print('Deleted: \'{}\''.format(config_rule))
+        print('Rule removed: \'{}\''.format(config_rule))
 
         return response
 
